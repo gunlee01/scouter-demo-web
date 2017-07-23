@@ -5,7 +5,7 @@
 
 	<groupId>gunlee.scouter.demo</groupId>
 	<artifactId>scouter-web-demo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>scouter-web-demo</name>
