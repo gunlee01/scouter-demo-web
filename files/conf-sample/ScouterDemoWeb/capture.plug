@@ -1,0 +1,17 @@
+[args]
+// void capArgs(WrContext $ctx, HookArgs $hook)
+String className = $hook.getClassName();
+String methodName = $hook.getMethodName();
+String methodDesc = $hook.getMethodDesc();
+
+if("".equals(className)) {
+
+}
+
+
+[return]
+// void capReturn(WrContext $ctx, HookReturn $hook)
+
+
+[this]
+// void capThis(WrContext $ctx, String $class, String $desc, Object $this)

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<!--
+  ~  Copyright 2015 the original author or authors. 
+  ~  @https://github.com/scouter-project/scouter
+  ~  
+  ~  Licensed under the Apache License, Version 2.0 (the "License"); 
+  ~  you may not use this file except in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~  
+  ~  http://www.apache.org/licenses/LICENSE-2.0
+  ~  
+  ~  Unless required by applicable law or agreed to in writing, software
+  ~  distributed under the License is distributed on an "AS IS" BASIS,
+  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  See the License for the specific language governing permissions and
+  ~  limitations under the License. 
+  ~
+  -->
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Scouter demo web</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+            integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+            crossorigin="anonymous"></script>
+
+    <style type="text/css">
+        body {
+            margin: 10px;
+        }
+        .call-action {
+            margin-bottom: 20px;
+        }
+        .call-action > label {
+            margin-left: 5px;
+            color: darkgreen;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h1>Scouter demo web</h1>
+</div>
+<div>
+    <div class="call-action">
+        <button type="button" id="btnCallApiGetUserId" class="btn btn-success">Call API - get user ID</button>
+        <label id="lblCallApiGetUserId"></label>
+    </div>
+    <div class="call-action">
+        <input type="text" id="userId" value="gunlee0001">
+        <button type="button" id="btnLogin" class="btn btn-success">Call API - Login</button>
+        <label id="lblLogin"></label>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $('#btnCallApiGetUserId').on('click', function () {
+            $('#lblCallApiGetUserId').text('doing...');
+            $.ajax({
+                url: '/user/user0010'
+            }).done(function (data, status, jqXhr) {
+                console.log(data);
+                $('#lblCallApiGetUserId').text('done!');
+            }).fail(function (jqXhr, status, error) {
+                alert("error : " + status + " : " + error);
+                $('#lblCallApiGetUserId').text('error!');
+            });
+        });
+
+        $('#btnLogin').on('click', function () {
+            $('#lblLogin').text('doing...');
+            $.post({
+                url: '/login',
+                contentType:"application/json; charset=utf-8",
+                dataType: 'json',
+                data: JSON.stringify({
+                    userId: $('#userId').val()
+                })
+            }).done(function (data, status, jqXhr) {
+                console.log(data);
+                $('#lblLogin').text('done!');
+            }).fail(function (jqXhr, status, error) {
+                alert("error : " + status + " : " + error);
+                $('#lblLogin').text('error!');
+            });
+        });
+
+    });
+</script>
+
+</body>
+</html>

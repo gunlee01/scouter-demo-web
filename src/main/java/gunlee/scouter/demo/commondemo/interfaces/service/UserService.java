@@ -1,7 +1,7 @@
-package gunlee.scouter.demo.commondemo.service;
+package gunlee.scouter.demo.commondemo.interfaces.service;
 
-import gunlee.scouter.demo.commondemo.mapper.UserMapper;
-import gunlee.scouter.demo.commondemo.model.User;
+import gunlee.scouter.demo.commondemo.domain.User;
+import gunlee.scouter.demo.commondemo.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
     @Autowired
-    UserMapper userMapper;
+    private UserRepository userRepository;
 
     public User retrieveUserById(String userId) {
-        return userMapper.findById(userId);
+        return userRepository.findById(userId);
     }
 }

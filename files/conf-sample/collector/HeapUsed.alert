@@ -1,0 +1,9 @@
+// void process(RealCounter $counter, PluginHelper $$)
+// {
+// TODO your java code here..
+
+$$.println("Hello : " + $counter.intValue);
+
+
+
+// }
