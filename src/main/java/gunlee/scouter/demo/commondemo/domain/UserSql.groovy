@@ -30,4 +30,21 @@ class UserSql {
         from   user 
         where  user_id=:userId
     """
+
+    public static final String SELECT_USER_BY_ID_PW = """
+        select user_id, 
+               user_name, 
+               created 
+        from   user 
+        where  user_id = :userId
+        and    password = :password
+    """
+
+    public static final String SELECT_USER_BY_NAME = """
+        select user_id, 
+               user_name, 
+               created 
+        from   user 
+        where  user_name like concat(:userName, '%')
+    """
 }

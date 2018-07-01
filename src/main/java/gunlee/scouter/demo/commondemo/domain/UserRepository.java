@@ -25,7 +25,11 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 import static gunlee.scouter.demo.commondemo.domain.UserSql.SELECT_USER;
+import static gunlee.scouter.demo.commondemo.domain.UserSql.SELECT_USER_BY_ID_PW;
+import static gunlee.scouter.demo.commondemo.domain.UserSql.SELECT_USER_BY_NAME;
 
 /**
  * @author Gun Lee (gunlee01@gmail.com) on 2018. 6. 16.
@@ -44,4 +48,22 @@ public class UserRepository {
         return njt.queryForObject(SELECT_USER, param, BeanPropertyRowMapper.newInstance(User.class));
     }
 
+    public List<User> findByIdAndPassword(String userId, String password) {
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("userId", userId)
+                .addValue("password", password);
+        return njt.query(SELECT_USER_BY_ID_PW, param, BeanPropertyRowMapper.newInstance(User.class));
+    }
+
+    public List<User> findByUserNameLike(String userName) {
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("userName", userName);
+        return njt.query(SELECT_USER_BY_NAME, param, BeanPropertyRowMapper.newInstance(User.class));
+    }
+
+    public List<User> sqlError() {
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("nonfield", "none");
+        return njt.query(SELECT_USER_BY_NAME, param, BeanPropertyRowMapper.newInstance(User.class));
+    }
 }

@@ -23,13 +23,19 @@ public class UserController {
 
     @PostMapping("/login")
     public BooleanView login(@RequestBody @Valid User user, HttpSession session) {
-        session.setAttribute("user", user);
-        return new BooleanView(true);
+        User logined = userService.login(user.getUserId(), "test");
+        if (user != null) {
+            session.setAttribute("user", logined);
+            return new BooleanView(true);
+        } else {
+            session.setAttribute("user", null);
+            return new BooleanView(false);
+        }
     }
 
     @GetMapping("/user/{userId}")
     public User systemInfo(@PathVariable("userId") String userId) {
-        User user = userService.retrieveUserById(userId);
+        User user = userService.findUserById(userId);
         return user;
     }
 }

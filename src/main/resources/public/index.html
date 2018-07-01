@@ -58,9 +58,29 @@
         <label id="lblCallApiGetUserId"></label>
     </div>
     <div class="call-action">
-        <input type="text" id="userId" value="gunlee0001">
+        <input type="text" id="userId" value="user0001">
         <button type="button" id="btnLogin" class="btn btn-success">Call API - Login</button>
         <label id="lblLogin"></label>
+    </div>
+    <div class="call-action">
+        <button type="button" id="btnSimulateMillisDelay" class="btn btn-success">Call API - Simulate millis delay</button>
+        <label id="lblSimulateMillisDelay"></label>
+    </div>
+    <div class="call-action">
+        <button type="button" id="btnSimulateSecondsDelay" class="btn btn-success">Call API - Simulate seconds delay</button>
+        <label id="lblSimulateSecondsDelay"></label>
+    </div>
+    <div class="call-action">
+        <button type="button" id="btnSimulateMillisDelayAsync" class="btn btn-success">Call API - Simulate millis delay include async calls</button>
+        <label id="lblSimulateMillisDelayAsync"></label>
+    </div>
+    <div class="call-action">
+        <button type="button" id="btnSimulateSecondsDelayAsync" class="btn btn-success">Call API - Simulate seconds delay include async calls</button>
+        <label id="lblSimulateSecondsDelayAsync"></label>
+    </div>
+    <div class="call-action">
+        <button type="button" id="btnSqlError" class="btn btn-success">Call API - Sql Error case</button>
+        <label id="lblSqlError"></label>
     </div>
 </div>
 
@@ -95,6 +115,71 @@
             }).fail(function (jqXhr, status, error) {
                 alert("error : " + status + " : " + error);
                 $('#lblLogin').text('error!');
+            });
+        });
+
+        $('#btnSimulateMillisDelay').on('click', function () {
+            $('#lblSimulateMillisDelay').text('doing...');
+            $.ajax({
+                url: '/simulate/type/millis-delay'
+            }).done(function (data, status, jqXhr) {
+                console.log(data);
+                $('#lblSimulateMillisDelay').text('done!');
+            }).fail(function (jqXhr, status, error) {
+                alert("error : " + status + " : " + error);
+                $('#lblSimulateMillisDelay').text('error!');
+            });
+        });
+
+        $('#btnSimulateSecondsDelay').on('click', function () {
+            $('#lblSimulateSecondsDelay').text('doing...');
+            $.ajax({
+                url: '/simulate/type/seconds-delay'
+            }).done(function (data, status, jqXhr) {
+                console.log(data);
+                $('#lblSimulateSecondsDelay').text('done!');
+            }).fail(function (jqXhr, status, error) {
+                alert("error : " + status + " : " + error);
+                $('#lblSimulateSecondsDelay').text('error!');
+            });
+        });
+
+        $('#btnSimulateMillisDelayAsync').on('click', function () {
+            $('#lblSimulateMillisDelayAsync').text('doing...');
+            $.ajax({
+                url: '/simulate/type/millis-delay-async-call'
+            }).done(function (data, status, jqXhr) {
+                console.log(data);
+                $('#lblSimulateMillisDelayAsync').text('done!');
+            }).fail(function (jqXhr, status, error) {
+                alert("error : " + status + " : " + error);
+                $('#lblSimulateMillisDelayAsync').text('error!');
+            });
+        });
+
+        $('#btnSimulateSecondsDelayAsync').on('click', function () {
+            $('#lblSimulateSecondsDelayAsync').text('doing...');
+            $.ajax({
+                url: '/simulate/type/seconds-delay-async-call'
+            }).done(function (data, status, jqXhr) {
+                console.log(data);
+                $('#lblSimulateSecondsDelayAsync').text('done!');
+            }).fail(function (jqXhr, status, error) {
+                alert("error : " + status + " : " + error);
+                $('#lblSimulateSecondsDelayAsync').text('error!');
+            });
+        });
+
+        $('#btnSqlError').on('click', function () {
+            $('#lblSqlError').text('doing...');
+            $.ajax({
+                url: '/case/sql-error'
+            }).done(function (data, status, jqXhr) {
+                console.log(data);
+                $('#lblSqlError').text('done!');
+            }).fail(function (jqXhr, status, error) {
+                alert("error : " + status + " : " + error);
+                $('#lblSqlError').text('error!');
             });
         });
 
