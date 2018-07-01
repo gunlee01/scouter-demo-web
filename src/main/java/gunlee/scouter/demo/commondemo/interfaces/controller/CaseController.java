@@ -33,8 +33,14 @@ public class CaseController {
     UserRepository userRepository;
 
     @GetMapping("/case/sql-error")
-    public BooleanView millisDelay() {
+    public BooleanView sqlError() {
         userRepository.sqlError();
+        return new BooleanView(true);
+    }
+
+    @GetMapping("/case/sql-generation-error")
+    public BooleanView sqlGenerationError() {
+        userRepository.sqlGenerationError();
         return new BooleanView(true);
     }
 }

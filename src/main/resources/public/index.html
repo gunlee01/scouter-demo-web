@@ -82,6 +82,10 @@
         <button type="button" id="btnSqlError" class="btn btn-success">Call API - Sql Error case</button>
         <label id="lblSqlError"></label>
     </div>
+    <div class="call-action">
+        <button type="button" id="btnSqlGenerationError" class="btn btn-success">Call API - Sql Generation Error case</button>
+        <label id="lblSqlGenerationError"></label>
+    </div>
 </div>
 
 <script>
@@ -180,6 +184,19 @@
             }).fail(function (jqXhr, status, error) {
                 alert("error : " + status + " : " + error);
                 $('#lblSqlError').text('error!');
+            });
+        });
+
+        $('#btnSqlGenerationError').on('click', function () {
+            $('#lblSqlGenerationError').text('doing...');
+            $.ajax({
+                url: '/case/sql-generation-error'
+            }).done(function (data, status, jqXhr) {
+                console.log(data);
+                $('#lblSqlGenerationError').text('done!');
+            }).fail(function (jqXhr, status, error) {
+                alert("error : " + status + " : " + error);
+                $('#lblSqlGenerationError').text('error!');
             });
         });
 

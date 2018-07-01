@@ -47,4 +47,13 @@ class UserSql {
         from   user 
         where  user_name like concat(:userName, '%')
     """
+
+    public static final String SELECT_ERROR_SQL = """
+        select user_id, 
+               user_name, 
+               non_column,
+               created 
+        from   user 
+        where  user_name = 'any'
+    """
 }

@@ -27,6 +27,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static gunlee.scouter.demo.commondemo.domain.UserSql.SELECT_ERROR_SQL;
 import static gunlee.scouter.demo.commondemo.domain.UserSql.SELECT_USER;
 import static gunlee.scouter.demo.commondemo.domain.UserSql.SELECT_USER_BY_ID_PW;
 import static gunlee.scouter.demo.commondemo.domain.UserSql.SELECT_USER_BY_NAME;
@@ -61,9 +62,15 @@ public class UserRepository {
         return njt.query(SELECT_USER_BY_NAME, param, BeanPropertyRowMapper.newInstance(User.class));
     }
 
-    public List<User> sqlError() {
+    public List<User> sqlGenerationError() {
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("nonfield", "none");
         return njt.query(SELECT_USER_BY_NAME, param, BeanPropertyRowMapper.newInstance(User.class));
+    }
+
+    public List<User> sqlError() {
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("nonfield", "none");
+        return njt.query(SELECT_ERROR_SQL, param, BeanPropertyRowMapper.newInstance(User.class));
     }
 }
