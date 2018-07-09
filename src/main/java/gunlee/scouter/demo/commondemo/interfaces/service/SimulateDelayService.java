@@ -18,8 +18,10 @@
 
 package gunlee.scouter.demo.commondemo.interfaces.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -66,6 +68,28 @@ public class SimulateDelayService {
         userService.findUserByUserNameLike("name011");
         block(future);
         userService.findUserByUserNameLike("name012");
+    }
+
+    @Transactional
+    public void simulateDelayLongWithDbLock() {
+        userService.findUserById("user0020");
+        String userId = "user" + StringUtils.leftPad(String.valueOf(ThreadLocalRandom.current().nextInt(101, 200)), 4, '0');
+        String userName = "nameX" + String.valueOf(ThreadLocalRandom.current().nextInt(101, 200));
+        asyncSimulateDelayService.modifyUserNameInAnotherTx(userId);
+        sleep(500);
+        userService.modifyUserName(userId, userName);
+        userService.findUserByUserNameLike(userName);
+    }
+
+    @Transactional
+    public void simulateDelayShortWithDbLock() {
+        userService.findUserById("user0020");
+        String userId = "user" + StringUtils.leftPad(String.valueOf(ThreadLocalRandom.current().nextInt(101, 200)), 4, '0');
+        String userName = "nameX" + String.valueOf(ThreadLocalRandom.current().nextInt(101, 200));
+        asyncSimulateDelayService.modifyUserNameInAnotherTxShort(userId);
+        sleep(30);
+        userService.modifyUserName(userId, userName);
+        userService.findUserByUserNameLike(userName);
     }
 
     public void sleepHundreds() {

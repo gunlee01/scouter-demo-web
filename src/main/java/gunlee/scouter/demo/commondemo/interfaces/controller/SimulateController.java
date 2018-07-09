@@ -55,4 +55,16 @@ public class SimulateController {
         simulateDelayService.simulateDelayLongWithAsyncCall();
         return new BooleanView(true);
     }
+
+    @GetMapping("/simulate/type/sql-locked-seconds-delay")
+    public BooleanView secondsDelayWithDbLock() {
+        simulateDelayService.simulateDelayLongWithDbLock();
+        return new BooleanView(true);
+    }
+
+    @GetMapping("/simulate/type/sql-locked-millis-delay")
+    public BooleanView millisDelayWithDbLock() {
+        simulateDelayService.simulateDelayShortWithDbLock();
+        return new BooleanView(true);
+    }
 }

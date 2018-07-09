@@ -19,11 +19,10 @@
 package gunlee.scouter.demo.commondemo.interfaces.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.concurrent.Future;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
@@ -31,32 +30,36 @@ import java.util.concurrent.TimeUnit;
  * @author Gun Lee (gunlee01@gmail.com) on 2018. 7. 1.
  */
 @Service
-public class AsyncSimulateDelayService {
+public class AsyncSimulateDelayServiceStep2 {
     @Autowired
     UserService userService;
-    @Autowired
-    AsyncSimulateDelayServiceStep2 step2;
 
-    @Async
-    public Future<Boolean> sleepHundreds() {
-        sleep(ThreadLocalRandom.current().nextInt(120, 800));
-        return new AsyncResult<>(true);
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void modifyUserNameTx(String userId) {
+        String userName = "nameZ" + String.valueOf(ThreadLocalRandom.current().nextInt(201, 300));
+        userService.modifyUserName(userId, userName);
+        sleepThousands();
+        userService.findUserById(userId);
     }
 
-    @Async
-    public Future<Boolean> sleepThousands() {
-        sleep(ThreadLocalRandom.current().nextInt(1200, 3800));
-        return new AsyncResult<>(true);
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void modifyUserNameTxShort(String userId) {
+        String userName = "nameZ" + String.valueOf(ThreadLocalRandom.current().nextInt(201, 300));
+        userService.modifyUserName(userId, userName);
+        sleepShort();
+        userService.findUserById(userId);
     }
 
-    @Async
-    public void modifyUserNameInAnotherTx(String userId) {
-        step2.modifyUserNameTx(userId);
+    public void sleepShort() {
+        sleep(ThreadLocalRandom.current().nextInt(30, 70));
     }
 
-    @Async
-    public void modifyUserNameInAnotherTxShort(String userId) {
-        step2.modifyUserNameTxShort(userId);
+    public void sleepHundreds() {
+        sleep(ThreadLocalRandom.current().nextInt(30, 800));
+    }
+
+    public void sleepThousands() {
+        sleep(ThreadLocalRandom.current().nextInt(1800, 5600));
     }
 
     private void sleep(int millis) {

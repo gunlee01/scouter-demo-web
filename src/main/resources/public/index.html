@@ -86,23 +86,37 @@
         <button type="button" id="btnSqlGenerationError" class="btn btn-success">Call API - Sql Generation Error case</button>
         <label id="lblSqlGenerationError"></label>
     </div>
+    <div class="call-action">
+        <button type="button" id="btnSqlLockDelayMillis" class="btn btn-success">Call API - Simulate delay by dbms lock(millis)</button>
+        <label id="lblSqlLockDelayMillis"></label>
+    </div>
+    <div class="call-action">
+        <button type="button" id="btnSqlLockDelay" class="btn btn-success">Call API - Simulate delay by dbms lock(seconds)</button>
+        <label id="lblSqlLockDelay"></label>
+    </div>
+    <div class="call-action">
+        <button type="button" id="btnCrossTraceSimple" class="btn btn-success">Call API - Simulate cross service traceablity - simple</button>
+        <label id="lblCrossTraceSimple"></label>
+    </div>
+    <div class="call-action">
+        <button type="button" id="btnCrossTraceComplex" class="btn btn-success">Call API - Simulate cross service traceablity - complex</button>
+        <label id="lblCrossTraceComplex"></label>
+    </div>
 </div>
 
 <script>
     $(document).ready(function () {
-
-        $('#btnCallApiGetUserId').on('click', function () {
-            $('#lblCallApiGetUserId').text('doing...');
-            $.ajax({
-                url: '/user/user0010'
-            }).done(function (data, status, jqXhr) {
-                console.log(data);
-                $('#lblCallApiGetUserId').text('done!');
-            }).fail(function (jqXhr, status, error) {
-                alert("error : " + status + " : " + error);
-                $('#lblCallApiGetUserId').text('error!');
-            });
-        });
+        addSimpleGetEvent('/user/user0010', '#btnCallApiGetUserId', '#lblCallApiGetUserId');
+        addSimpleGetEvent('/simulate/type/millis-delay', '#btnSimulateMillisDelay', '#lblSimulateMillisDelay');
+        addSimpleGetEvent('/simulate/type/seconds-delay', '#btnSimulateSecondsDelay', '#lblSimulateSecondsDelay');
+        addSimpleGetEvent('/simulate/type/millis-delay-async-call', '#btnSimulateMillisDelayAsync', '#lblSimulateMillisDelayAsync');
+        addSimpleGetEvent('/simulate/type/seconds-delay-async-call', '#btnSimulateSecondsDelayAsync', '#lblSimulateSecondsDelayAsync');
+        addSimpleGetEvent('/case/sql-error', '#btnSqlError', '#lblSqlError');
+        addSimpleGetEvent('/case/sql-generation-error', '#btnSqlGenerationError', '#lblSqlGenerationError');
+        addSimpleGetEvent('/simulate/type/sql-locked-millis-delay', '#btnSqlLockDelayMillis', '#lblSqlLockDelayMillis');
+        addSimpleGetEvent('/simulate/type/sql-locked-seconds-delay', '#btnSqlLockDelay', '#lblSqlLockDelay');
+        addSimpleGetEvent('/traceability/cross-service/simple', '#btnCrossTraceSimple', '#lblCrossTraceSimple');
+        addSimpleGetEvent('/traceability/cross-service/complex', '#btnCrossTraceComplex', '#lblCrossTraceComplex');
 
         $('#btnLogin').on('click', function () {
             $('#lblLogin').text('doing...');
@@ -122,84 +136,20 @@
             });
         });
 
-        $('#btnSimulateMillisDelay').on('click', function () {
-            $('#lblSimulateMillisDelay').text('doing...');
-            $.ajax({
-                url: '/simulate/type/millis-delay'
-            }).done(function (data, status, jqXhr) {
-                console.log(data);
-                $('#lblSimulateMillisDelay').text('done!');
-            }).fail(function (jqXhr, status, error) {
-                alert("error : " + status + " : " + error);
-                $('#lblSimulateMillisDelay').text('error!');
+        function addSimpleGetEvent(url, btnName, lblName) {
+            $(btnName).on('click', function () {
+                $(lblName).text('doing...');
+                $.ajax({
+                    url: url
+                }).done(function (data, status, jqXhr) {
+                    console.log(data);
+                    $(lblName).text('done!');
+                }).fail(function (jqXhr, status, error) {
+                    alert("error : " + status + " : " + error);
+                    $(lblName).text('error!');
+                });
             });
-        });
-
-        $('#btnSimulateSecondsDelay').on('click', function () {
-            $('#lblSimulateSecondsDelay').text('doing...');
-            $.ajax({
-                url: '/simulate/type/seconds-delay'
-            }).done(function (data, status, jqXhr) {
-                console.log(data);
-                $('#lblSimulateSecondsDelay').text('done!');
-            }).fail(function (jqXhr, status, error) {
-                alert("error : " + status + " : " + error);
-                $('#lblSimulateSecondsDelay').text('error!');
-            });
-        });
-
-        $('#btnSimulateMillisDelayAsync').on('click', function () {
-            $('#lblSimulateMillisDelayAsync').text('doing...');
-            $.ajax({
-                url: '/simulate/type/millis-delay-async-call'
-            }).done(function (data, status, jqXhr) {
-                console.log(data);
-                $('#lblSimulateMillisDelayAsync').text('done!');
-            }).fail(function (jqXhr, status, error) {
-                alert("error : " + status + " : " + error);
-                $('#lblSimulateMillisDelayAsync').text('error!');
-            });
-        });
-
-        $('#btnSimulateSecondsDelayAsync').on('click', function () {
-            $('#lblSimulateSecondsDelayAsync').text('doing...');
-            $.ajax({
-                url: '/simulate/type/seconds-delay-async-call'
-            }).done(function (data, status, jqXhr) {
-                console.log(data);
-                $('#lblSimulateSecondsDelayAsync').text('done!');
-            }).fail(function (jqXhr, status, error) {
-                alert("error : " + status + " : " + error);
-                $('#lblSimulateSecondsDelayAsync').text('error!');
-            });
-        });
-
-        $('#btnSqlError').on('click', function () {
-            $('#lblSqlError').text('doing...');
-            $.ajax({
-                url: '/case/sql-error'
-            }).done(function (data, status, jqXhr) {
-                console.log(data);
-                $('#lblSqlError').text('done!');
-            }).fail(function (jqXhr, status, error) {
-                alert("error : " + status + " : " + error);
-                $('#lblSqlError').text('error!');
-            });
-        });
-
-        $('#btnSqlGenerationError').on('click', function () {
-            $('#lblSqlGenerationError').text('doing...');
-            $.ajax({
-                url: '/case/sql-generation-error'
-            }).done(function (data, status, jqXhr) {
-                console.log(data);
-                $('#lblSqlGenerationError').text('done!');
-            }).fail(function (jqXhr, status, error) {
-                alert("error : " + status + " : " + error);
-                $('#lblSqlGenerationError').text('error!');
-            });
-        });
-
+        }
     });
 </script>
 

@@ -1,5 +1,6 @@
 package gunlee.scouter.demo.commondemo.interfaces.service;
 
+import gunlee.scouter.demo.commondemo.domain.Device;
 import gunlee.scouter.demo.commondemo.domain.User;
 import gunlee.scouter.demo.commondemo.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,4 +32,13 @@ public class UserService {
     public List<User> findUserByUserNameLike(String userName) {
         return userRepository.findByUserNameLike(userName);
     }
+
+    public void modifyUserName(String userId, String userName) {
+        userRepository.modifyUserName(userId, userName);
+    }
+
+    public Device findDeviceByUserId(String userId) {
+        return userRepository.findDeviceByUserId(userId);
+    }
 }
+

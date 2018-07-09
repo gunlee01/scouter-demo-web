@@ -56,4 +56,18 @@ class UserSql {
         from   user 
         where  user_name = 'any'
     """
+
+    public static final String UPDATE_USER_NAME = """
+        update user 
+        set    user_name = :userName
+        where  user_id = :userId
+    """
+
+    public static final String SELECT_DEVICE_BY_USER = """
+        select device_id, 
+               device_token, 
+               created 
+        from   device 
+        where  user_id=:userId
+    """
 }

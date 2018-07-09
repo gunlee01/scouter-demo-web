@@ -27,10 +27,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static gunlee.scouter.demo.commondemo.domain.UserSql.SELECT_DEVICE_BY_USER;
 import static gunlee.scouter.demo.commondemo.domain.UserSql.SELECT_ERROR_SQL;
 import static gunlee.scouter.demo.commondemo.domain.UserSql.SELECT_USER;
 import static gunlee.scouter.demo.commondemo.domain.UserSql.SELECT_USER_BY_ID_PW;
 import static gunlee.scouter.demo.commondemo.domain.UserSql.SELECT_USER_BY_NAME;
+import static gunlee.scouter.demo.commondemo.domain.UserSql.UPDATE_USER_NAME;
 
 /**
  * @author Gun Lee (gunlee01@gmail.com) on 2018. 6. 16.
@@ -46,7 +48,22 @@ public class UserRepository {
 
     public User findById(String userId) {
         SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
-        return njt.queryForObject(SELECT_USER, param, BeanPropertyRowMapper.newInstance(User.class));
+        List<User> users = njt.query(SELECT_USER, param, BeanPropertyRowMapper.newInstance(User.class));
+        if (users.size() > 0) {
+            return users.get(0);
+        } else {
+            return null;
+        }
+    }
+
+    public Device findDeviceByUserId(String userId) {
+        SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+        List<Device> devices = njt.query(SELECT_DEVICE_BY_USER, param, BeanPropertyRowMapper.newInstance(Device.class));
+        if (devices.size() > 0) {
+            return devices.get(0);
+        } else {
+            return null;
+        }
     }
 
     public List<User> findByIdAndPassword(String userId, String password) {
@@ -72,5 +89,12 @@ public class UserRepository {
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("nonfield", "none");
         return njt.query(SELECT_ERROR_SQL, param, BeanPropertyRowMapper.newInstance(User.class));
+    }
+
+    public void modifyUserName(String userId, String userName) {
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("userId", userId)
+                .addValue("userName", userName);
+        njt.update(UPDATE_USER_NAME, param);
     }
 }
