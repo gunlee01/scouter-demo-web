@@ -87,7 +87,7 @@ public class SimulateDelayService {
         String userId = "user" + StringUtils.leftPad(String.valueOf(ThreadLocalRandom.current().nextInt(101, 200)), 4, '0');
         String userName = "nameX" + String.valueOf(ThreadLocalRandom.current().nextInt(101, 200));
         asyncSimulateDelayService.modifyUserNameInAnotherTxShort(userId);
-        sleep(30);
+        sleep(100);
         userService.modifyUserName(userId, userName);
         userService.findUserByUserNameLike(userName);
     }

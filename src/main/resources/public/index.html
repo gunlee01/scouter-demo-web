@@ -54,6 +54,12 @@
 </div>
 <div>
     <div class="call-action">
+        <button type="button" id="btnSimulatorStart" class="btn btn-success">Load simulator start</button>
+        <label id="lblSimulatorStart"></label>
+        <button type="button" id="btnSimulatorStop" class="btn btn-success">Load simulator stop</button>
+        <label id="lblSimulatorStop"></label>
+    </div>
+    <div class="call-action">
         <button type="button" id="btnCallApiGetUserId" class="btn btn-success">Call API - get user ID</button>
         <label id="lblCallApiGetUserId"></label>
     </div>
@@ -106,6 +112,8 @@
 
 <script>
     $(document).ready(function () {
+        addSimpleGetEvent('/simulator/start', '#btnSimulatorStart', '#lblSimulatorStart');
+        addSimpleGetEvent('/simulator/stop', '#btnSimulatorStop', '#lblSimulatorStop');
         addSimpleGetEvent('/user/user0010', '#btnCallApiGetUserId', '#lblCallApiGetUserId');
         addSimpleGetEvent('/simulate/type/millis-delay', '#btnSimulateMillisDelay', '#lblSimulateMillisDelay');
         addSimpleGetEvent('/simulate/type/seconds-delay', '#btnSimulateSecondsDelay', '#lblSimulateSecondsDelay');

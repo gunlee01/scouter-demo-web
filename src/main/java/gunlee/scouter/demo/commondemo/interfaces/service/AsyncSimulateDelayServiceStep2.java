@@ -51,15 +51,11 @@ public class AsyncSimulateDelayServiceStep2 {
     }
 
     public void sleepShort() {
-        sleep(ThreadLocalRandom.current().nextInt(30, 70));
-    }
-
-    public void sleepHundreds() {
-        sleep(ThreadLocalRandom.current().nextInt(30, 800));
+        sleep(ThreadLocalRandom.current().nextInt(210, 1200));
     }
 
     public void sleepThousands() {
-        sleep(ThreadLocalRandom.current().nextInt(1800, 5600));
+        sleep(ThreadLocalRandom.current().nextInt(1800, 4200));
     }
 
     private void sleep(int millis) {
