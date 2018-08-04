@@ -11,7 +11,7 @@ CREATE INDEX idx_user_name on user(user_name);
 
 DROP TABLE device;
 CREATE TABLE device (
-  device_id  INTEGER PRIMARY KEY,
+  device_id  VARCHAR(32) PRIMARY KEY,
   user_id    VARCHAR(32) NOT NULL,
   device_token VARCHAR(18) NOT NULL,
   created     DATETIME NOT NULL
