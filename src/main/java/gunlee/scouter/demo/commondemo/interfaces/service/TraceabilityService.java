@@ -19,6 +19,7 @@
 package gunlee.scouter.demo.commondemo.interfaces.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -45,6 +46,12 @@ public class TraceabilityService {
     @Autowired
     RestTemplate restTemplate;
 
+    @Value("${scouter.demo.web.internal.host}")
+    String remoteHost;
+
+    @Value("${scouter.demo.web.internal.port:0}")
+    String remotePort;
+
     public void justCallRemote() {
         String remoteHost = getRemoteHost();
 
@@ -69,7 +76,10 @@ public class TraceabilityService {
     }
 
     private String getRemoteHost() {
-        String port = environment.getProperty("local.server.port");
-        return "http://localhost:" + port;
+        String port = remotePort;
+        if ("0".equals(port)) {
+            port = environment.getProperty("local.server.port");
+        }
+        return "http://" + remoteHost + ":" + port;
     }
 }
