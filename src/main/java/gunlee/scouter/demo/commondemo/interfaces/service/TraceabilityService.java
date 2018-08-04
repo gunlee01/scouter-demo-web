@@ -23,6 +23,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  * @author Gun Lee (gunlee01@gmail.com) on 2018. 7. 1.
  */
@@ -46,23 +48,23 @@ public class TraceabilityService {
     public void justCallRemote() {
         String remoteHost = getRemoteHost();
 
-        userService.findUserById("user0010");
-        String result = restTemplate.getForObject(remoteHost + "/user/user0011", String.class);
+        userService.findUserById("user0" + ThreadLocalRandom.current().nextInt(101, 499));
+        String result = restTemplate.getForObject(remoteHost + "/user/user0" + ThreadLocalRandom.current().nextInt(101, 499), String.class);
     }
 
     public void callAsyncAndRemoteChain() {
         String remoteHost = getRemoteHost();
 
-        userService.findUserById("user0210");
+        userService.findUserById("user0" + ThreadLocalRandom.current().nextInt(101, 499));
         simulateDelayService.simulateDelayLongWithAsyncCall();
-        restTemplate.getForObject(remoteHost + "/user/user0022", String.class);
+        restTemplate.getForObject(remoteHost + "/user/user0" + ThreadLocalRandom.current().nextInt(101, 499), String.class);
         restTemplate.getForObject(remoteHost + "/traceability/cross-service/simple", String.class);
         restTemplate.getForObject(remoteHost + "/traceability/cross-service/simple2", String.class);
         userService.findDeviceByUserId("user0210");
     }
 
     public void callAsyncSample1() {
-        userService.findDeviceByUserId("user0300");
+        userService.findDeviceByUserId("user0" + ThreadLocalRandom.current().nextInt(101, 499));
         simulateDelayService.simulateDelayShortWithAsyncCall();
     }
 

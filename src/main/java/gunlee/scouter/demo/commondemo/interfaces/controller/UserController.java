@@ -2,6 +2,7 @@ package gunlee.scouter.demo.commondemo.interfaces.controller;
 
 import gunlee.scouter.demo.commondemo.domain.BooleanView;
 import gunlee.scouter.demo.commondemo.domain.User;
+import gunlee.scouter.demo.commondemo.interfaces.service.RedisService;
 import gunlee.scouter.demo.commondemo.interfaces.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +22,15 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    RedisService redisService;
+
     @PostMapping("/login")
     public BooleanView login(@RequestBody @Valid User user, HttpSession session) {
-        User logined = userService.login(user.getUserId(), "test");
+        redisService.increaseLoginCounter();
+        User logon = userService.login(user.getUserId(), "test");
         if (user != null) {
-            session.setAttribute("user", logined);
+            session.setAttribute("user", logon);
             return new BooleanView(true);
         } else {
             session.setAttribute("user", null);
@@ -35,6 +40,8 @@ public class UserController {
 
     @GetMapping("/user/{userId}")
     public User systemInfo(@PathVariable("userId") String userId) {
+        redisService.increaseCounter();
+        redisService.cacheUserId(userId, userId);
         User user = userService.findUserById(userId);
         return user;
     }
