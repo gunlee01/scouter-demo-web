@@ -36,6 +36,7 @@ public class RequestInvokeThread implements Pausable {
     private RequestSample requestSample;
     private boolean pause = true;
     private long sleepDefault = 1000L;
+    private String servicePort = System.getProperty("server.port", "8080");
 
     private RequestInvokeThread(RequestSample requestSample, ExecutorService es) {
         this.es = es;
@@ -69,7 +70,7 @@ public class RequestInvokeThread implements Pausable {
                     es.submit(() -> {
                         try {
                             HttpResponse<String> response;
-                            String url = "http://localhost:8080" + requestSample.getUrl();
+                            String url = "http://localhost:" + servicePort + requestSample.getUrl();
                             if (requestSample.getHttpMethod() == HttpMethod.POST) {
                                 response = Unirest.post(url).body(requestSample.getBody()).asString();
                             } else { // All get now
