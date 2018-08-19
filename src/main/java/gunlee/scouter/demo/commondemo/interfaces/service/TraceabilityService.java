@@ -69,7 +69,7 @@ public class TraceabilityService {
         restTemplate.getForObject(remoteHost + "/traceability/cross-service/simple", String.class);
         restTemplate.getForObject(remoteHost + "/traceability/cross-service/simple2", String.class);
         userService.findDeviceByUserId("user0210");
-        restTemplate.getForObject("http://google.com/", String.class);
+        restTemplate.getForObject("http://www.google.com/", String.class);
     }
 
     public void callAsyncSample1() {
