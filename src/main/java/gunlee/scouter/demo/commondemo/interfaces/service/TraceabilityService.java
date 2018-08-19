@@ -56,7 +56,8 @@ public class TraceabilityService {
         String remoteHost = getRemoteHost();
 
         userService.findUserById("user0" + ThreadLocalRandom.current().nextInt(101, 499));
-        String result = restTemplate.getForObject(remoteHost + "/user/user0" + ThreadLocalRandom.current().nextInt(101, 499), String.class);
+        restTemplate.getForObject(remoteHost + "/user/user0" + ThreadLocalRandom.current().nextInt(101, 499), String.class);
+        restTemplate.getForObject("http://notice.scouterapm.com:6181/latest-notice", String.class);
     }
 
     public void callAsyncAndRemoteChain() {
@@ -68,6 +69,7 @@ public class TraceabilityService {
         restTemplate.getForObject(remoteHost + "/traceability/cross-service/simple", String.class);
         restTemplate.getForObject(remoteHost + "/traceability/cross-service/simple2", String.class);
         userService.findDeviceByUserId("user0210");
+        restTemplate.getForObject("http://google.com/", String.class);
     }
 
     public void callAsyncSample1() {
