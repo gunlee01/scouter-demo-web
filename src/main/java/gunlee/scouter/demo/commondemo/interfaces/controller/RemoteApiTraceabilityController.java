@@ -44,6 +44,12 @@ public class RemoteApiTraceabilityController {
         return new BooleanView(true);
     }
 
+    @GetMapping("/traceability/cross-service/async-rest-template")
+    public BooleanView traceabilityAsyncRestTemmplate() {
+        traceabilityService.callRemoteAsyncTemplate();
+        return new BooleanView(true);
+    }
+
     @GetMapping("/traceability/cross-service/complex")
     public BooleanView traceabilityComplex() {
         traceabilityService.callAsyncAndRemoteChain();

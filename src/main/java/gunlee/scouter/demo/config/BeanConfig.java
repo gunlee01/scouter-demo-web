@@ -24,6 +24,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.client.Netty4ClientHttpRequestFactory;
+import org.springframework.web.client.AsyncRestTemplate;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -47,5 +49,12 @@ public class BeanConfig {
                 .build();
         clientHttpRequestFactory.setHttpClient(httpClient);
         return clientHttpRequestFactory;
+    }
+
+    @Bean
+    public AsyncRestTemplate asyncRestTemplate(){
+        AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
+        asyncRestTemplate.setAsyncRequestFactory(new Netty4ClientHttpRequestFactory());
+        return asyncRestTemplate;
     }
 }

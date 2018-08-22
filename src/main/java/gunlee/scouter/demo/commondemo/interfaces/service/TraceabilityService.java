@@ -21,9 +21,13 @@ package gunlee.scouter.demo.commondemo.interfaces.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.web.client.AsyncRestTemplate;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -45,6 +49,9 @@ public class TraceabilityService {
 
     @Autowired
     RestTemplate restTemplate;
+
+    @Autowired
+    AsyncRestTemplate asyncRestTemplate;
 
     @Value("${scouter.demo.web.internal.host}")
     String remoteHost;
@@ -83,5 +90,25 @@ public class TraceabilityService {
             port = environment.getProperty("local.server.port");
         }
         return "http://" + remoteHost + ":" + port;
+    }
+
+    public void callRemoteAsyncTemplate() {
+        String remoteHost = getRemoteHost();
+
+        ListenableFuture<ResponseEntity<String>> entity =
+                asyncRestTemplate.getForEntity(remoteHost + "/traceability/cross-service/simple2", String.class);
+
+        entity.addCallback(result -> {
+            //null
+        }, Throwable::printStackTrace);
+
+        try {
+            ResponseEntity<String> responseEntity = entity.get();
+            responseEntity.getBody();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 }

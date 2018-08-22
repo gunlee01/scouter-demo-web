@@ -108,6 +108,10 @@
         <button type="button" id="btnCrossTraceComplex" class="btn btn-info">Call API - Simulate cross service traceablity - complex</button>
         <label id="lblCrossTraceComplex"></label>
     </div>
+    <div class="call-action">
+        <button type="button" id="btnAsyncRestTemplate" class="btn btn-info">Call API - Simulate cross service traceablity - asyncRestTemplate</button>
+        <label id="lblAsyncRestTemplate"></label>
+    </div>
 </div>
 
 <script>
@@ -125,6 +129,7 @@
         addSimpleGetEvent('/simulate/type/sql-locked-seconds-delay', '#btnSqlLockDelay', '#lblSqlLockDelay');
         addSimpleGetEvent('/traceability/cross-service/simple', '#btnCrossTraceSimple', '#lblCrossTraceSimple');
         addSimpleGetEvent('/traceability/cross-service/complex', '#btnCrossTraceComplex', '#lblCrossTraceComplex');
+        addSimpleGetEvent('/traceability/cross-service/async-rest-template', '#btnAsyncRestTemplate', '#lblAsyncRestTemplate');
 
         $('#btnLogin').on('click', function () {
             $('#lblLogin').text('doing...');
