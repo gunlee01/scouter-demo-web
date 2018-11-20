@@ -20,6 +20,7 @@ package gunlee.scouter.demo.commondemo.interfaces.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.sleuth.annotation.NewSpan;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -59,6 +60,7 @@ public class TraceabilityService {
     @Value("${scouter.demo.web.internal.port:0}")
     String remotePort;
 
+    @NewSpan
     public void justCallRemote() {
         String remoteHost = getRemoteHost();
 

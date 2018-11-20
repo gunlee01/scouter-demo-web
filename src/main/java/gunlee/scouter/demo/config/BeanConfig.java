@@ -20,6 +20,8 @@ package gunlee.scouter.demo.config;
 
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.springframework.cloud.sleuth.Sampler;
+import org.springframework.cloud.sleuth.sampler.AlwaysSampler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpRequestFactory;
@@ -56,5 +58,10 @@ public class BeanConfig {
         AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
         asyncRestTemplate.setAsyncRequestFactory(new Netty4ClientHttpRequestFactory());
         return asyncRestTemplate;
+    }
+
+    @Bean
+    public Sampler defaultSampler() {
+        return new AlwaysSampler();
     }
 }

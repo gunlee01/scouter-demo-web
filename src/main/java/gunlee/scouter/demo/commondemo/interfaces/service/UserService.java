@@ -4,6 +4,7 @@ import gunlee.scouter.demo.commondemo.domain.Device;
 import gunlee.scouter.demo.commondemo.domain.User;
 import gunlee.scouter.demo.commondemo.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.sleuth.annotation.NewSpan;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,10 +17,12 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @NewSpan
     public User findUserById(String userId) {
         return userRepository.findById(userId);
     }
 
+    @NewSpan
     public User login(String userId, String password) {
         List<User> users = userRepository.findByIdAndPassword(userId, password);
         if (users != null && users.size() == 1) {
@@ -29,6 +32,7 @@ public class UserService {
         }
     }
 
+    @NewSpan
     public List<User> findUserByUserNameLike(String userName) {
         return userRepository.findByUserNameLike(userName);
     }
@@ -37,6 +41,7 @@ public class UserService {
         userRepository.modifyUserName(userId, userName);
     }
 
+    @NewSpan
     public Device findDeviceByUserId(String userId) {
         return userRepository.findDeviceByUserId(userId);
     }
