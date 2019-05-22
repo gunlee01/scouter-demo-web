@@ -60,13 +60,19 @@ public class TraceabilityService {
     @Value("${scouter.demo.web.internal.port:0}")
     String remotePort;
 
+    @Value("${scouter.demo.external.1:http://www.apache.org/}")
+    String external1;
+
+    @Value("${scouter.demo.external.2:http://www.google.com/}")
+    String external2;
+
     @NewSpan
     public void justCallRemote() {
         String remoteHost = getRemoteHost();
 
         userService.findUserById("user0" + ThreadLocalRandom.current().nextInt(101, 499));
         restTemplate.getForObject(remoteHost + "/user/user0" + ThreadLocalRandom.current().nextInt(101, 499), String.class);
-        restTemplate.getForObject("http://notice.scouterapm.com:6181/latest-notice", String.class);
+        restTemplate.getForObject(external1, String.class);
     }
 
     public void callAsyncAndRemoteChain() {
@@ -78,7 +84,7 @@ public class TraceabilityService {
         restTemplate.getForObject(remoteHost + "/traceability/cross-service/simple", String.class);
         restTemplate.getForObject(remoteHost + "/traceability/cross-service/simple2", String.class);
         userService.findDeviceByUserId("user0210");
-        restTemplate.getForObject("http://www.google.com/", String.class);
+        restTemplate.getForObject(external2, String.class);
     }
 
     public void callAsyncSample1() {
