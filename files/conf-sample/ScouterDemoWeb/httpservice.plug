@@ -1,5 +1,6 @@
 [start]
 // void start(WrContext $ctx, WrRequest $req, WrResponse $res)
+println("hello1");
 
 [end]
 // void end(WrContext $ctx, WrRequest $req, WrResponse $res)

@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @GetMapping("/user/{userId}")
-    public User systemInfo(@PathVariable("userId") String userId) {
+    public User getUser(@PathVariable("userId") String userId) {
         redisService.increaseCounter();
         redisService.cacheUserId(userId, userId);
         User user = userService.findUserById(userId);

@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * @author Gun Lee (gunlee01@gmail.com) on 2017. 7. 29.
@@ -78,5 +80,27 @@ public class ScouterAsyncSupportController {
         String value = String.valueOf(Math.random());
         asyncSampleService.myAsyncService(value);
         return "async/asyncMethod";
+    }
+
+    @GetMapping("async/asyncAndWaitMethod")
+    public String asyncWaitMethodCall() throws ExecutionException, InterruptedException {
+        String value = String.valueOf(Math.random());
+        Future<String> stringFuture = asyncSampleService.myAsyncWithReturnService(value);
+        stringFuture.get();
+        return "async/asyncMethod";
+    }
+
+    @GetMapping("async/cfSample")
+    public String cfSample() {
+        String value = String.valueOf(Math.random());
+        asyncSampleService.cfAsyncTrace(value);
+        return "async/cfSample";
+    }
+
+    @GetMapping("async/cfSample2")
+    public String cfSample2() {
+        String value = String.valueOf(Math.random());
+        asyncSampleService.cfAsyncTrace2(value);
+        return "async/cfSample2";
     }
 }

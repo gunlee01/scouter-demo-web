@@ -19,7 +19,6 @@
 package gunlee.scouter.demo.commondemo.interfaces.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.sleuth.annotation.NewSpan;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
@@ -45,7 +44,7 @@ public class AsyncSimulateDelayService {
     }
 
     @Async
-    @NewSpan
+//    @NewSpan
     public Future<Boolean> sleepThousands() {
         sleep(ThreadLocalRandom.current().nextInt(1200, 3800));
         return new AsyncResult<>(true);

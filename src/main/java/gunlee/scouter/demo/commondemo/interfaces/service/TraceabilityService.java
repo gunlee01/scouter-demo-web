@@ -18,9 +18,9 @@
 
 package gunlee.scouter.demo.commondemo.interfaces.service;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.sleuth.annotation.NewSpan;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -54,14 +54,24 @@ public class TraceabilityService {
     @Autowired
     AsyncRestTemplate asyncRestTemplate;
 
+    @Autowired
+    KafkaService kafkaService;
+
     @Value("${scouter.demo.web.internal.host}")
     String remoteHost;
 
     @Value("${scouter.demo.web.internal.port:0}")
     String remotePort;
 
-    @NewSpan
+    @Value("${scouter.demo.kafka.enabled:false}")
+    boolean kafkaEnabled;
+
+//    @NewSpan
     public void justCallRemote() {
+        if (kafkaEnabled) {
+            kafkaService.send(kafkaService.defaultTopic(), "HW" + RandomUtils.nextInt(10, 100));
+        }
+
         String remoteHost = getRemoteHost();
 
         userService.findUserById("user0" + ThreadLocalRandom.current().nextInt(101, 499));

@@ -18,6 +18,10 @@
 
 package gunlee.scouter.demo.commondemo.interfaces.controller;
 
+import gunlee.scouter.demo.commondemo.interfaces.service.KafkaService;
+import org.apache.commons.lang3.RandomUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,9 +34,18 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 public class TestController {
 
+    @Autowired
+    private KafkaService kafkaService;
+
     @PostMapping("/telegraf/metric")
     public String metric(HttpServletRequest request, @RequestBody String body) {
         System.out.println(body);
+        return "OK";
+    }
+
+    @GetMapping("/test/kafka")
+    public String kafka() {
+        kafkaService.send("scouter-topic2", "mymessage-" + RandomUtils.nextInt());
         return "OK";
     }
 }
