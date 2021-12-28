@@ -69,7 +69,7 @@ public class RequestInvokeThread implements Pausable {
                     es.submit(() -> {
                         try {
                             HttpResponse<String> response;
-                            String url = "http://localhost:8080" + requestSample.getUrl();
+                            String url = "http://localhost:9090" + requestSample.getUrl();
                             if (requestSample.getHttpMethod() == HttpMethod.POST) {
                                 response = Unirest.post(url).body(requestSample.getBody()).asString();
                             } else { // All get now

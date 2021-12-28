@@ -18,11 +18,16 @@
 
 package gunlee.scouter.demo.commondemo.interfaces.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * @author Gun Lee (gunlee01@gmail.com) on 2017. 7. 20.
@@ -34,5 +39,12 @@ public class TestController {
     public String metric(HttpServletRequest request, @RequestBody String body) {
         System.out.println(body);
         return "OK";
+    }
+
+    @GetMapping("/test/nio/file")
+    public boolean test() throws IOException {
+        OutputStream outputStream = Files.newOutputStream(Paths.get("/test"));
+        System.out.println(outputStream);
+        return true;
     }
 }
